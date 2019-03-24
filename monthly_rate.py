@@ -2,6 +2,8 @@
 ###################
 # Mortgage payment calculator
 #from https://www.quora.com/How-do-I-calculate-the-loan-repayment-in-Python
+# comments added regarding http://www.matheraetsel.de/texte/LM-6.pdf to understand math
+
 import sys, argparse
     
 parser = argparse.ArgumentParser(description="Loan Payment Calculator")
@@ -15,7 +17,7 @@ MortgageAPR = args.interest
 PrimaryLoan = args.principal
 LoanTerm = args.number_of_months
     
-irate = ((1+MortgageAPR/100.0) ** (1.0/12)) - 1
+irate = ((1+MortgageAPR/100.0) ** (1.0/12)) - 1 #page 37 formula for k
 MonthlyPmnt = PrimaryLoan * (irate * ((1+irate) ** LoanTerm)) / (((1+irate) ** LoanTerm) - 1)
 print ("Monthly payment is", '{:.2f}'.format(MonthlyPmnt), "for loan of", PrimaryLoan, \
                 "paid back in", LoanTerm, "months at a fixed APR of", '{:.4f}'.format(MortgageAPR), \
