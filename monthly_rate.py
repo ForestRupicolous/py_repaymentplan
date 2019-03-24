@@ -17,8 +17,11 @@ MortgageAPR = args.interest
 PrimaryLoan = args.principal
 LoanTerm = args.number_of_months
     
-irate = ((1+MortgageAPR/100.0) ** (1.0/12)) - 1 #page 37 formula for k
-MonthlyPmnt = PrimaryLoan * (irate * ((1+irate) ** LoanTerm)) / (((1+irate) ** LoanTerm) - 1)
+#irate = ((1+MortgageAPR/100.0) ** (1.0/12)) - 1 #page 37 formula for k (exponetial rate during year)
+irate = MortgageAPR/100/12  #linar rate during year
+#MonthlyPmnt = PrimaryLoan * (irate * ((1+irate) ** LoanTerm)) / (((1+irate) ** LoanTerm) - 1)
+MonthlyPmnt = PrimaryLoan * ((1+irate) ** LoanTerm) * irate/(((1+irate) ** LoanTerm) -1) #formula 6.15 for linear rate during year
+
 print ("Monthly payment is", '{:.2f}'.format(MonthlyPmnt), "for loan of", PrimaryLoan, \
                 "paid back in", LoanTerm, "months at a fixed APR of", '{:.4f}'.format(MortgageAPR), \
                     'results in a sum of ','{:.2f}'.format(LoanTerm*MonthlyPmnt))
